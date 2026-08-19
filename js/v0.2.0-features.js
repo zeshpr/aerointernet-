@@ -87,18 +87,26 @@
     update();
   }
 
-  // Theme preference without overriding an existing theme system.
+  // Theme preference. Aero Night (dark navy sky) is the default look;
+  // press "T" to switch to the original sunny Aero Day palette.
+  function setThemeColor(mode) {
+    let meta = $('meta[name="theme-color"]');
+    if (!meta) return;
+    meta.setAttribute("content", mode === "day" ? "#48bdf5" : "#0d1c42");
+  }
   function setupThemeShortcut() {
     document.addEventListener("keydown", e => {
       if (e.key.toLowerCase() !== "t" || e.ctrlKey || e.metaKey || e.altKey) return;
       const root = document.documentElement;
-      const current = root.dataset.aeroTheme || "day";
-      root.dataset.aeroTheme = current === "day" ? "night" : "day";
+      const current = root.dataset.aeroTheme || "night";
+      root.dataset.aeroTheme = current === "night" ? "day" : "night";
       localStorage.setItem("aero-theme", root.dataset.aeroTheme);
+      setThemeColor(root.dataset.aeroTheme);
       toast(root.dataset.aeroTheme === "night" ? "🌙 Aero Night enabled" : "☀️ Aero Day enabled");
     });
     const saved = localStorage.getItem("aero-theme");
     if (saved) document.documentElement.dataset.aeroTheme = saved;
+    setThemeColor(document.documentElement.dataset.aeroTheme || "night");
   }
 
   // Lightweight offline cache hint. Does not interfere with an existing service worker.
