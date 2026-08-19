@@ -40,6 +40,9 @@
       ["🎮 Games", () => location.hash = "games"],
       ["✨ About Aero Internet", () => location.hash = "about"]
     ];
+    // Lets other feature layers (e.g. aero-plus.js) register extra commands
+    // without needing to touch this file or duplicate the palette.
+    window.aeroRegisterCommand = (name, fn) => commands.push([name, fn]);
 
     function render(filter="") {
       list.innerHTML = "";
