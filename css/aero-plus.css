@@ -1,0 +1,65 @@
+/* Aero Internet — "Aero Plus" feature pack
+   Guestbook, achievements, visitor odometer, extras menu,
+   cursor bubbles, idle screensaver, konami-code bubble rain.
+   Isolated layer: does not modify style.css / v0.2.0-features.css. */
+
+/* ---------- Guestbook ---------- */
+.guestbook-form{border-radius:26px;padding:22px;display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.guestbook-form input,.guestbook-form textarea{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.6);padding:12px 14px;border-radius:14px;outline:none;color:var(--dark);font:inherit;resize:vertical}
+.guestbook-form .aero-button{align-self:flex-start}
+.guestbook-list{display:flex;flex-direction:column;gap:10px}
+.guestbook-entry{border-radius:20px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start}
+.guestbook-entry .gb-avatar{font-size:26px;line-height:1}
+.guestbook-entry b{display:block}
+.guestbook-entry small{opacity:.6}
+.guestbook-entry p{margin:4px 0 0;line-height:1.45}
+.guestbook-empty{opacity:.6;padding:20px;text-align:center}
+
+/* ---------- Achievements ---------- */
+.achievements-card{border-radius:25px;padding:24px;margin-top:15px}
+.achievements-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.achievements-head h3{margin:0;font-size:20px}
+.achievements-head span{font-size:12px;font-weight:800;opacity:.65}
+.achievements-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.ach-badge{border-radius:18px;padding:14px 8px;text-align:center;border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.35);transition:.2s}
+.ach-badge.unlocked{background:rgba(255,255,255,.65);box-shadow:0 8px 20px rgba(0,100,150,.14)}
+.ach-badge.locked{opacity:.55;filter:grayscale(.4)}
+.ach-badge .ach-icon{display:block;font-size:26px;margin-bottom:6px}
+.ach-badge b{display:block;font-size:11px;line-height:1.2}
+.ach-badge small{display:block;font-size:9px;opacity:.65;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+@media(max-width:700px){.achievements-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- Visitor odometer (Y2K footer counter) ---------- */
+.visitor-odometer{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;opacity:.85}
+.odometer{display:flex;gap:2px}
+.odometer b{display:inline-block;min-width:16px;text-align:center;background:#0d1c42;color:#8ff0ff;border-radius:4px;padding:2px 3px;font-family:'Courier New',monospace;box-shadow:inset 0 0 4px rgba(0,0,0,.5)}
+html[data-aero-theme="day"] .odometer b{background:#074a70}
+
+/* ---------- Extras button + panel ---------- */
+.extras-panel{position:fixed;z-index:9997;top:70px;right:18px;width:250px;border-radius:22px;padding:14px;display:none;flex-direction:column;gap:6px}
+.extras-panel.open{display:flex}
+.extras-panel h4{margin:2px 6px 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;opacity:.6}
+.extras-item{display:flex;align-items:center;justify-content:space-between;gap:8px;border:0;background:rgba(255,255,255,.5);border-radius:14px;padding:10px 12px;font-weight:800;text-align:left;color:var(--dark)}
+.extras-item:hover{background:rgba(255,255,255,.85)}
+.extras-item .es-state{font-size:11px;opacity:.6;font-weight:700}
+.extras-item.is-on .es-state{color:#15984b;opacity:1}
+@media(max-width:600px){.extras-panel{right:10px;left:10px;width:auto}}
+
+/* ---------- Cursor bubble trail ---------- */
+.aero-trail-bubble{position:fixed;z-index:9996;border-radius:50%;pointer-events:none;border:2px solid rgba(255,255,255,.85);background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.9),rgba(120,215,255,.35) 60%,rgba(80,180,255,.15));box-shadow:inset 2px 2px 6px rgba(255,255,255,.8);animation:aeroTrailPop .7s ease forwards}
+@keyframes aeroTrailPop{0%{opacity:.85;transform:scale(1) translateY(0)}100%{opacity:0;transform:scale(.3) translateY(-26px)}}
+
+/* ---------- Idle screensaver ---------- */
+.aero-screensaver{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:linear-gradient(180deg,#050a1f,#0d1c42 55%,#182c58);cursor:pointer}
+.aero-screensaver.open{display:flex}
+.aero-screensaver .ss-logo{font-size:70px;animation:aeroSsFloat 3.4s ease-in-out infinite}
+.aero-screensaver p{color:#bfe6ff;font-weight:800;letter-spacing:1px;opacity:.8}
+@keyframes aeroSsFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-22px) rotate(3deg)}}
+.aero-screensaver .ss-bubble{position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.08);animation:aeroSsDrift linear infinite}
+@keyframes aeroSsDrift{from{transform:translateY(110vh)}to{transform:translateY(-20vh)}}
+
+/* ---------- Konami bubble rain ---------- */
+.aero-confetti-bubble{position:fixed;top:-40px;z-index:10002;border-radius:50%;pointer-events:none;border:2px solid rgba(255,255,255,.9);box-shadow:inset 3px 3px 8px rgba(255,255,255,.8);animation:aeroConfettiFall linear forwards}
+@keyframes aeroConfettiFall{to{transform:translateY(115vh) rotate(360deg)}}
+.aero-secret-banner{position:fixed;top:14vh;left:50%;transform:translateX(-50%);z-index:10003;padding:18px 26px;border-radius:22px;background:rgba(10,20,50,.85);color:#fff;font-weight:900;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:aeroSecretIn .4s ease}
+@keyframes aeroSecretIn{from{opacity:0;transform:translate(-50%,-14px) scale(.9)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
